@@ -8,16 +8,22 @@ class DataModel {
   }
 
   getById(id) {
-    return this.data.find(obj => {
+    /*return this.data.find(obj => {
       if (obj.id === id) {
         return obj;
+      } else {
+        return null;
       }
-      return null;
-    });
+    });*/
+    let found = this.data.find(obj => obj.id === id);
+    return found ? found : null;
+  }
+  getIndexOf(id) {
+    return this.data.findIndex(el => el.id == id);
   }
 
   save(obj) {
-    if (this.validate(obj)) {
+    if (this.validate(obj) && typeof obj === "object" && obj !== null) {
       this.data.push(obj);
       return true;
     }
@@ -25,27 +31,49 @@ class DataModel {
   }
 
   update(obj, id) {
-    for (let element of this.data) {
-      let index = this.data.indexOf(element) == id;
-      if (index) {
-        for (let prop in element) {
-          element[prop] = obj[prop];
+    /*const target = this.data.find(element => element.id == id);
+    for (let dat of this.data) {
+      if (JSON.stringify(dat) == JSON.stringify(target)) {
+        for (let prop in dat) {
+          dat[prop] = obj[prop];
           return true;
         }
-
         console.log("object not found");
         return false;
       }
     }
+    */
+
+    const index = this.getIndexOf(id);
+
+    if (index > -1) {
+      const temp = this.data[index];
+      for (const property in obj) {
+        temp[property] = obj[property];
+      }
+
+      this.data[index] = temp;
+      return true;
+    }
+
+    console.log("object id not found");
+    return false;
   }
+
   delete(id) {
     let idPosition = this.data.findIndex(obj => obj.id === id);
-    return this.data.splice(idPosition, 1);
+
+    if (idPosition < 0) {
+      return false;
+    }
+    this.data.splice(idPosition, 1);
+
+    return true;
   }
 
   // this method will be overriden in the sub classes
   validate(obj) {
-    return true;
+    return false;
   }
 }
 

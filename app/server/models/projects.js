@@ -13,12 +13,17 @@ class Project {
 
 class Projects extends DataModel {
   validate(obj) {
-    return (
+    let emptProp = Object.values(obj).some(el => el === "");
+    if (
+      !emptProp &&
       Array.isArray(obj.authors) &&
       Array.isArray(obj.tags) &&
       obj.tags.length !== 0 &&
       obj.authors.length !== 0
-    );
+    ) {
+      return true;
+    }
+    return false;
   }
 }
 

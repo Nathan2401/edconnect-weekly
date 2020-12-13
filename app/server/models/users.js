@@ -43,13 +43,17 @@ class Users extends DataModel {
   }
 
   validate(obj) {
-    return this.data.every(
-      element =>
-        Object.keys(obj).length !== 0 &&
-        obj.email !== element.email &&
-        obj.matricNumber !== element.matricNumber &&
-        obj.password.length >= 7
+    let scanObjProps = this.data.every(
+      el => el.email !== obj.email && el.matricNumber !== obj.matricNumber
     );
+    if (
+      scanObjProps &&
+      Object.keys(obj).length !== 0 &&
+      obj["password"].length >= 7
+    ) {
+      return true;
+    }
+    return false;
   }
 }
 
