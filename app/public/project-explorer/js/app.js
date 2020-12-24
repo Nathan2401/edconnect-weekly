@@ -1,30 +1,41 @@
-let firstName = document.querySelector("input[name=firstName]").value;
-let lastName = document.querySelector('#signupForm input[name="lastName"]')
-  .value;
-let email = document.querySelector('#signupForm input[name="email"]').value;
-let password = document.querySelector('#signupForm input[name="password"]')
-  .value;
-let program = document.querySelector('#signupForm select[name="program"]')
-  .value;
-let matricNumber = document.querySelector(
-  '#signupForm input[name="matricNumber"]'
-).value;
-let graduationYear = document.querySelector(
-  '#signupForm select[name="graduationYear"]'
-).value;
-
-let contData = {
-  firstName,
-  lastName,
-  email,
-  password,
-  program,
-  matricNumber,
-  graduationYear
-};
 let signUpButton = document.getElementById("btn-1");
 signUpButton.addEventListener("click", function(e) {
   e.preventDefault();
-  console.log(firstName);
-  console.log(contData);
+
+  const data = {
+    firstName: document.getElementsByName("firstName")[0].value,
+    lastName: document.querySelector('#signupForm input[name="lastName"]')
+      .value,
+    email: document.querySelector('#signupForm input[name="email"]').value,
+    password: document.querySelector('#signupForm input[name="password"]')
+      .value,
+    program: document.querySelector('#signupForm select[name="program"]').value,
+    matricNumber: document.querySelector(
+      '#signupForm input[name="matricNumber"]'
+    ).value,
+    graduationYear: document.querySelector(
+      '#signupForm select[name="graduationYear"]'
+    ).value
+  };
+
+  fetch("http://localhost:4000/api/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    redirect: "follow",
+    body: JSON.stringify(data)
+  })
+    .then(response => {
+      if (response.status == 200 || 201) {
+        return response.json();
+      }
+    })
+
+    .then(data => {
+      console.log("Success:", data);
+    })
+    .catch(error => {
+      console.error("Error:", error);
+    });
 });
