@@ -27,14 +27,17 @@ signUpButton.addEventListener("click", function(e) {
     body: JSON.stringify(data)
   })
     .then(response => {
-      if (response.status == 200 || 201) {
+      if (response.status == 200 || response.status == 201) {
         return response.json();
-        document.cookie = `${uid}= ${data}.${data}.${id}; path=/project-explorer; expires=60*60*24*30;`;
       }
     })
 
     .then(data => {
       console.log("Success:", data);
+      let uid;
+      //console.log(uid);
+      document.cookie = `${uid}= ${data}.${data.id}; path=/project-explorer; expires=60*60*24*30;`;
+      console.log(document.cookie);
     })
     .catch(error => {
       console.error("Error:", error);
