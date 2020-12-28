@@ -29,6 +29,7 @@ signUpButton.addEventListener("click", function(e) {
     .then(response => {
       if (response.status == 200 || 201) {
         return response.json();
+        document.cookie = `${uid}= ${data}.${data}.${id}; path=/project-explorer; expires=60*60*24*30;`;
       }
     })
 
