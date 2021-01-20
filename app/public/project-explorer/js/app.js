@@ -1,12 +1,10 @@
 
 /*SignUP Part*/
-const postReq = () => {
-  let RegForm = document.querySelector('#signupForm');
+const signPostReq = () => {
+  let regForm = document.querySelector('#signupForm');
+  console.log(regForm);
   
-  let signUpButton = document.getElementsByClassName("btn-1")[0];
- 
-  
-  signUpButton.addEventListener("click", function(e) {
+regForm.addEventListener("submit", (e)=> {
     e.preventDefault();
 
     
@@ -67,7 +65,7 @@ const postReq = () => {
             err_msg += `<br>${error}`;
             upDiv.innerHTML = err_msg;
             console.log(upDiv);
-            RegForm.prepend(upDiv);
+            regForm.prepend(upDiv);
           }
         }
       })
@@ -75,7 +73,8 @@ const postReq = () => {
         console.log(error);
       });
   });
-};
+}
+
 
 const updateHeader = () => {
   let cookie = document.cookie;
@@ -118,14 +117,15 @@ const updateHeader = () => {
   }
 };
 
+
+
 /*Login Part*/
 
 const LoginAction = () =>{ 
-  let loginButton = document.getElementById('login-1');
-  loginButton.addEventListener('click', LoginPostData)
-}
+  let loginForm = document.getElementById('loginForm');
+  
 
-const LoginPostData = (e) =>{
+const LoginPostData = (e)=>{
    e.preventDefault();
   
     let email = document.querySelector('#loginForm input[name="email"]').value;
@@ -134,7 +134,7 @@ const LoginPostData = (e) =>{
       email,
       password
     }
-    console.log(loginData);
+    //console.log(loginData);
     
   let url = "http://localhost:4000/api/login";
   fetch(url, {
@@ -145,20 +145,96 @@ const LoginPostData = (e) =>{
         body: JSON.stringify(loginData)
   
   }).then((response)=>response.json()).then((data)=>{
-    if(data.status="ok"){
-      console.log(data);
+    console.log(data);
+    if(data.status ==="ok"){
+      
+     let value = data.data.id;
+     console.log(value);
+      document.cookie = `uid=${value}; path=/; max-age=60*60*24*30;`;
+      console.log(document.cookie);
+      window.location.href="index.html";
     }
-    if(data.status="error"){
-      console.log(data)
+    else if(data.status==="error"){
+     let upDiv = document.createElement('div');
+     upDiv.className = "alert alert-danger";
+     upDiv.textContent="Invalid email\//password";
+     loginForm.prepend(upDiv);
+     
+
     }
   }).catch((error)=>{
+    console.log(error);
     
   })
 }
+loginForm.addEventListener('submit', LoginPostData);
+
+}
   //Login Section.
+
+
+  // create project section//
+  const CreateProject = ()=>{
+    let createProj = document.getElementById('createProjectForm');
+    const createProjectAction = (e) =>{
+      e.preventDefault();
+      let name = document.querySelector('#createProjectForm input[name="name"]').value;
+      let abstract = document.querySelector('#createProjectForm textArea[name="abstract"]').value;
+      let authors = document.querySelector('#createProjectForm input[name="authors"]').value;
+      let tags = document.querySelector('#createProjectForm input[name="tags"]').value;
+      let createProjData = {
+        name,
+        abstract,
+        authors,
+        tags
+      }
+      let url ="http://localhost:4000/api/projects";
+      fetch(url, {
+        method:'POST',
+        header:{
+          "Content-Type": "application/json"
+          },
+        body:JSON.stringify(createProjData)
+
+      }).then((response)=>response.json()).then(data=>{
+        if(data.status ==='ok'){
+          console.log(data);
+        }
+      }) 
+    }
+
+    createProj.addEventListener('submit',createProjectAction);
+
+
+  }
+
  
 window.onload = () => {
-  postReq();
-  updateHeader();
+  
+  
+  let path = window.location.href;
+  if(path==="http://localhost:4000/project-explorer/register.html"){
+    signPostReq();
+    updateHeader();
+    
+  
+    
+}else if (path==="http://localhost:4000/project-explorer/login.html"){
+  //updateHeader();
   LoginAction();
+ 
+
+}
+else if(path==="http://localhost:4000/project-explorer/createProject.html"){
+   CreateProject();
+}
+updateHeader();
+
+
+
+
+
+
+ 
+  
 };
