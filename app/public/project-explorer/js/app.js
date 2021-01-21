@@ -82,8 +82,9 @@ const updateHeader = () => {
   let cookieArr1 = cookie.split(";");
   console.log(cookieArr1);
   const cookieFind = cookieArr1.find(el => el.startsWith("uid"));
-  cookieValue = cookieFind.split("=")[1];
-  console.log(cookieValue);
+  if(cookieFind){
+    cookieValue = cookieFind.split("=")[1];
+    console.log(cookieValue);
   if (cookieValue) {
     fetch(`http://localhost:4000/api/users/${cookieValue}`)
       .then(response => response.json())
@@ -115,6 +116,10 @@ const updateHeader = () => {
         console.log(error);
       });
   }
+
+  }
+ 
+  
 };
 
 
@@ -176,6 +181,7 @@ loginForm.addEventListener('submit', LoginPostData);
   // create project section//
   const CreateProject = ()=>{
     let createProj = document.getElementById('createProjectForm');
+    console.log(createProj);
     const createProjectAction = (e) =>{
       e.preventDefault();
       let name = document.querySelector('#createProjectForm input[name="name"]').value;
@@ -199,6 +205,13 @@ loginForm.addEventListener('submit', LoginPostData);
       }).then((response)=>response.json()).then(data=>{
         if(data.status ==='ok'){
           console.log(data);
+          window.location.href="index.html";
+        }
+        else{
+         let upDiv = document.createElement("div");
+         upDiv.className = "alert alert-danger";
+         
+
         }
       }) 
     }
@@ -212,7 +225,8 @@ loginForm.addEventListener('submit', LoginPostData);
 window.onload = () => {
   
   
-  let path = window.location.href;
+  let path = window.location.href.toLowerCase();
+  console.log(path);
   if(path==="http://localhost:4000/project-explorer/register.html"){
     signPostReq();
     updateHeader();
@@ -225,7 +239,7 @@ window.onload = () => {
  
 
 }
-else if(path==="http://localhost:4000/project-explorer/createProject.html"){
+else if(path.includes('createproject.html')){
    CreateProject();
 }
 updateHeader();
