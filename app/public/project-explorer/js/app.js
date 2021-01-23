@@ -90,10 +90,10 @@ const updateHeader = () => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        let loginButton = document.querySelector('a[href="/login"]');
+        let loginButton = document.querySelector('a[href="/login.html"]');
         loginButton.setAttribute("id", "username");
         loginButton.textContent = `Hi, ${data.firstname}`;
-        let signButton = document.querySelector('a[href="/signup"]');
+        let signButton = document.querySelector('a[href="/register.html"]');
         signButton.setAttribute("id", "logout");
         signButton.textContent = "Logout";
         const SignButtonCLicked = () => {
@@ -179,21 +179,23 @@ loginForm.addEventListener('submit', LoginPostData);
 
 
   // create project section//
+  
   const CreateProject = ()=>{
     let createProj = document.getElementById('createProjectForm');
-    console.log(createProj);
     const createProjectAction = (e) =>{
       e.preventDefault();
       let name = document.querySelector('#createProjectForm input[name="name"]').value;
       let abstract = document.querySelector('#createProjectForm textArea[name="abstract"]').value;
-      let authors = document.querySelector('#createProjectForm input[name="authors"]').value;
-      let tags = document.querySelector('#createProjectForm input[name="tags"]').value;
+      let authors = document.querySelector('#createProjectForm input[name="authors"]').value.split(',');
+      let tags = document.querySelector('#createProjectForm input[name="tags"]').value.split('#');
+      
       let createProjData = {
         name,
         abstract,
         authors,
         tags
       }
+      
       let url ="http://localhost:4000/api/projects";
       fetch(url, {
         method:'POST',
@@ -213,7 +215,10 @@ loginForm.addEventListener('submit', LoginPostData);
          
 
         }
-      }) 
+      }) .catch((error)=>{
+        console.log(error);
+      })
+   
     }
 
     createProj.addEventListener('submit',createProjectAction);
@@ -240,7 +245,19 @@ window.onload = () => {
 
 }
 else if(path.includes('createproject.html')){
+
+  let cookieArr1 = document.cookie.split(';')
+    let cookieFind = cookieArr1.find(el=>el.startsWith('uid'));
+    console.log(cookieFind);
+    let cookieVal = cookieFind.split('=')[1];
+    console.log(cookieVal);
+    if(cookieVal){
+      updateHeader();
    CreateProject();
+  }
+  else{
+    window.location.href ="login.html" ;
+  }
 }
 updateHeader();
 
