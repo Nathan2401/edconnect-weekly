@@ -52,7 +52,7 @@ regForm.addEventListener("submit", (e)=> {
           console.log("Success:", data);
           let value = data.data.id;
           //console.log(uid);
-          document.cookie = `uid=${value}; path=/; max-age=60*60*24*30;`;
+          document.cookie = `uid=${value}; path=/; max-age=${60*60*24*30};`;
           console.log(data);
           window.location.href = "index.html";
         } else {
@@ -155,7 +155,7 @@ const LoginPostData = (e)=>{
       
      let value = data.data.id;
      console.log(value);
-      document.cookie = `uid=${value}; path=/; max-age=60*60*24*30;`;
+      document.cookie = `uid=${value}; path=/; max-age=${60*60*24*30};`;
       console.log(document.cookie);
       window.location.href="index.html";
     }
