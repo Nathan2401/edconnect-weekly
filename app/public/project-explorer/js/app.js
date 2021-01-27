@@ -90,10 +90,10 @@ const updateHeader = () => {
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        let loginButton = document.querySelector('a[href="/login.html"]');
+        let loginButton = document.querySelector('a[href="login.html"]');
         loginButton.setAttribute("id", "username");
         loginButton.textContent = `Hi, ${data.firstname}`;
-        let signButton = document.querySelector('a[href="/register.html"]');
+        let signButton = document.querySelector('a[href="register.html"]');
         signButton.setAttribute("id", "logout");
         signButton.textContent = "Logout";
         const SignButtonCLicked = () => {
@@ -186,8 +186,8 @@ loginForm.addEventListener('submit', LoginPostData);
       e.preventDefault();
       let name = document.querySelector('#createProjectForm input[name="name"]').value;
       let abstract = document.querySelector('#createProjectForm textArea[name="abstract"]').value;
-      let authors = document.querySelector('#createProjectForm input[name="authors"]').value.split(',');
-      let tags = document.querySelector('#createProjectForm input[name="tags"]').value.split('#');
+      let authors = document.querySelector('#createProjectForm input[name="authors"]').value.split(',').filter(el=>el!=="").map(el=>el.trim());
+      let tags = document.querySelector('#createProjectForm input[name="tags"]').value.split('#').filter(el=>el!=="").map(el=>el.trim());
       
       let createProjData = {
         name,
