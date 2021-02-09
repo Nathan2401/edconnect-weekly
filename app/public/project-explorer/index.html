@@ -13,8 +13,8 @@
             <form method="get" action="/projects" class="form-inline"><input type="text" placeholder="Search Projects"
                     name="search" class="mr-sm-2 form-control"><input type="hidden" name="type" value="Name"><button
                     type="submit" class="btn btn-outline-light">Search</button></form>
-            <div class="mr-auto navbar-nav"><a href="/projects" data-rb-event-key="/projects"
-                    class="nav-link">Projects</a><a href="/projects/submit" data-rb-event-key="/projects/submit"
+            <div class="mr-auto navbar-nav"><a href="viewproject.html" data-rb-event-key="/projects"
+                    class="nav-link">Projects</a><a href="createproject.html" data-rb-event-key="/projects/submit"
                     class="nav-link">Submit</a></div>
             <div class="navbar-nav"><a href="register.html" data-rb-event-key="/signup" class="nav-link">Sign up</a><a
                     href="login.html" data-rb-event-key="/login" class="nav-link">Login</a></div>
@@ -28,42 +28,9 @@
                         class="btn btn-secondary">Login</a></p>
             </div>
             <div class="px-0 mb-5 container">
-                <div class="row"></div>
+                <div class="row showcase" id="projectCardContainer"></div>
             </div>
-            <div class="d-flex flex-row-reverse justify-content-between flex-container1">
-                    <section class='child-1'>
-                            <h3 class="text-primary">Project 1</h3>
-                            <ul class="list-unstyled">    
-                                <li id="projectName">James Lil, Ade Brien</li>
-                                <li id="projectDesc mt-2">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
-                                <li class="text-primary mt-2"><span class="code-inline mr-2">#javascript</span><span>#mongodb</span></li>
-                            </ul>
-                    </section>
-                    <section class="child-2">
-                            <h3 class="text-primary">Project 2</h3>
-                            <ul class="list-unstyled">    
-                                <li id="projectName">Fried Lim, Tola Daniel</li>
-                                <li id="projectDesc mt-2">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
-                                <li class="text-primary mt-2"><span class="code-inline mr-2">#vuejs</span><span>#ci</span></li>
-                            </ul>
-                    </section>
-                    <section class="child-3">
-                            <h3 class="text-primary">Project 3</h3>
-                            <ul class="list-unstyled">    
-                                <li id="projectName">Ben Rice, Ade Sola</li>
-                                <li id="projectDesc mt-2">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
-                                <li class="text-primary mt-2"><span class="code-inline mr-2">#css</span><span>#html</span></li>
-                            </ul>
-                    </section>
-                    <section class="child-4">
-                            <h3 class="text-primary">Project 4</h3>
-                            <ul class="list-unstyled">    
-                                <li id="projectName">Henry James, Bola Ade</li>
-                                <li id="projectDesc mt-2">Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </li>
-                                <li class="text-primary mt-2"><span class="code-inline mr-2">#yaml</span><span>#vuejs</span></li>
-                            </ul>
-                    </section>
-            </div>
+            
         </div>
         <div class="container">
             <nav class="navbar navbar-expand navbar-light bg-light">

@@ -1,4 +1,5 @@
 
+
 /*SignUP Part*/
 const signPostReq = () => {
   let regForm = document.querySelector('#signupForm');
@@ -199,7 +200,7 @@ loginForm.addEventListener('submit', LoginPostData);
       let url ="http://localhost:4000/api/projects";
       fetch(url, {
         method:'POST',
-        header:{
+        headers:{
           "Content-Type": "application/json"
           },
         body:JSON.stringify(createProjData)
@@ -212,6 +213,14 @@ loginForm.addEventListener('submit', LoginPostData);
         else{
          let upDiv = document.createElement("div");
          upDiv.className = "alert alert-danger";
+         let errData = data.errors.join('<br>');
+         for(let err in errData){
+           upDiv.innerHTML += err ;
+           console.log(upDiv);
+           createProj.append(upDiv);
+           
+
+         }
          
 
         }
@@ -223,6 +232,108 @@ loginForm.addEventListener('submit', LoginPostData);
 
     createProj.addEventListener('submit',createProjectAction);
 
+
+  }
+
+  /**section LoadProject on index.html page */
+
+  const loadProj = ()=>{
+    const createProjectCard = (project) => { 
+    const {name,abstract,id,tags,authors} = project ;
+    let authorsList = authors.join(',');
+    let tagsList = tags.map(e=>`#${e}`).join(' ').replace(',',"");
+    const card = document.createElement('div'); 
+     card.className = "col-lg-3 mb-3"; card.innerHTML = ` <div class='min-text-line border border-muted rounded p-3 mb-3 hoverable h-100'> <h5 class='text-primary text-capitalize'>${name}</h5> <h6 class='text-secondary text-capitalize'>${authorsList}</h6> <p class='small'>${abstract}</p> <p class='small font-weight-bold text-primary'>${tagsList}</p> </div>`; card.addEventListener('click', () => { window.location.href = `${window.location.origin}/project-explorer/viewProject.html?id=${id}` }) 
+    return card;}
+
+    const projectCards = document.getElementById('projectCardContainer');
+    
+    let url = `http://localhost:4000/api/projects/`;
+    fetch(url).then(response =>response.json()).then(data =>
+      {data.slice(0,4).map(dat=>{
+        let item = createProjectCard(dat); 
+        projectCards.appendChild(item);
+      })
+      
+      
+      }).catch(err=>console.log(err));
+  }
+
+  /* end of Load Project section*/
+
+
+  /* View Project */
+
+  const viewProject = ()=>{
+    let url = new URL(window.location.href);
+    let params =new URLSearchParams(url.search);
+    let id = params.get('id');
+
+    const linkToDom = (project) =>{
+      const{createdBy,name, abstract, authors,tags} = project;
+      //let authorsList = authors.join(',');
+      console.log(authors);
+    let tagsList = tags.map(e=>`#${e}`).join(' ').replace(',',"");
+      let projName = document.getElementById('project_name');
+      projName.textContent = name;
+      let projAbstract = document.getElementById('project_abstract'); 
+      projAbstract.firstChild.textContent = abstract;
+      let projAuthors = document.getElementById('project_authors');
+      let projAuthorsChild = projAuthors.children[1];
+     // console.log(projAuthorsChild);
+      console.log(projAuthorsChild.children);
+      for( let i=0;i<projAuthorsChild.children.length;i++){
+      projAuthorsChild.children[i].children[0].textContent =authors[i];
+       let projTags = document.getElementById('project_tags').children[0].children[0];
+       projTags.textContent = tagsList;
+        
+        
+      }
+      const createBy=(creator)=>{
+        const{firstname,lastname} = creator;
+        let projAuthor = document.getElementById('project_author');
+        console.log(projAuthor);
+        projAuthor.children[1].textContent = `${firstname} ${lastname}`;
+
+      }
+     const getCreateByDat = ()=> {
+        let fetchCreateUrl =`http://localhost:4000/api/users/${createdBy}`
+        fetch(fetchCreateUrl).then(response=>response.json()).then(data=>{
+         // console.log(id);
+          createBy(data);
+        })
+        
+        
+    
+       }
+       getCreateByDat();
+    
+      
+    }
+    
+   
+   
+
+ const getViewProjData = () =>{
+    let fetchUrl= `http://localhost:4000/api/projects/${id}`;
+    fetch(fetchUrl).then(response=>response.json()).then(data=>{
+      console.log(data);
+      linkToDom(data);
+     // console.log(linkToDom(data));
+    })
+
+  }
+ 
+ 
+    getViewProjData();
+
+  
+ 
+   
+
+  
+
+    
 
   }
 
@@ -258,6 +369,14 @@ else if(path.includes('createproject.html')){
   else{
     window.location.href ="login.html" ;
   }
+}
+else if(path.includes("index.html")){
+  updateHeader();
+  loadProj();
+}
+else if(path.includes('viewproject.html')){
+  updateHeader();
+  viewProject();
 }
 updateHeader();
 

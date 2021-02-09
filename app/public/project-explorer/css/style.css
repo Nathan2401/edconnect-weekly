@@ -5,13 +5,13 @@ h6 {
   margin: 0;
 }
 
-/*.flex-container1 {
+.flex-container1 {
   display: flex;
   justify-content: space-between;
 }
 */
-.flex-container1 section {
-  border: 1px solid #ebe8e7;
+.flex-container1 a {
+  border: 1px solid #000;
   flex-basis: 23.5%;
   padding: 15px;
 }
