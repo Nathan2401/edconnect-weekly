@@ -9,14 +9,14 @@
 <body>
     <div class="container-lg">
         <nav class="navbar navbar-expand navbar-dark bg-primary"><a href="/" class="navbar-brand">Project Explorer</a>
-            <form method="get" action="/projects" class="form-inline"><input type="text" placeholder="Search Projects"
+            <form class="form-inline"><input type="text" placeholder="Search Projects"
                     name="search" class="mr-sm-2 form-control"><input type="hidden" name="type" value="Name"><button
                     type="submit" class="btn btn-outline-light">Search</button></form>
-            <div class="mr-auto navbar-nav"><a href="/projects" data-rb-event-key="/projects"
-                    class="nav-link">Projects</a><a href="/projects/submit" data-rb-event-key="/projects/submit"
+            <div class="mr-auto navbar-nav"><a href="viewProject.html" data-rb-event-key="/projects"
+                    class="nav-link">Projects</a><a href="createProject.html" data-rb-event-key="/projects/submit"
                     class="nav-link">Submit</a></div>
-            <div class="navbar-nav"><a href="/signup" data-rb-event-key="/signup" class="nav-link">Sign up</a><a
-                    href="/login" data-rb-event-key="/login" class="nav-link">Login</a></div>
+            <div class="navbar-nav"><a href="register.html" data-rb-event-key="/signup" class="nav-link">Sign up</a><a
+                    href="login.html" data-rb-event-key="/login" class="nav-link" id="username">Login</a></div>
         </nav>
 
 
@@ -97,7 +97,7 @@
             <hr>
             <div class="justify-content-center my-5 w-75 mx-auto row">
                 <div class="col">
-                    <form action="/password" method="post" class="">
+                    <form class="">
                         <div class="form-row">
                             <div class="form-group col-md-4"><label class="form-label">Current password</label><input
                                     placeholder="Current Password" required="" name="currentPassword" type="password"

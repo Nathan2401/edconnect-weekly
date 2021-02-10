@@ -2,6 +2,39 @@
 
 /*SignUP Part*/
 const signPostReq = () => {
+  const progGet = (programs) =>{
+    return programs.map(prog=>"<option value='"+prog+"'>"+prog+"<option>").join('');
+
+  }
+  const gradGet = (grad) =>{
+    return grad.map(gra=>"<option value ='"+gra+"'>"+gra+"</option>").join('');
+
+  }
+  const getPrograms = ()=>{
+    fetch('http://localhost:4000/api/programs').then(response=>response.json()).then(data=>{
+      let selectProgCont =  document.getElementsByName('program')[0]
+      let gradItem = gradGet(data);
+       selectProgCont.insertAdjacentHTML('beforeend',gradItem);
+       console.log(selectProgCont);
+       return selectProgCont;
+    
+    
+    })
+  }
+
+  const getGrad = ()=>{
+    fetch('http://localhost:4000/api/graduationYears').then(response=>response.json()).then(data=>{
+
+    let selectGradCont =  document.getElementsByName('graduationYear')[0]
+   let gradItem = gradGet(data);
+    selectGradCont.insertAdjacentHTML('beforeend',gradItem);
+    console.log(selectGradCont);
+    return selectGradCont;
+    
+    })
+  }
+  getPrograms();
+  getGrad();
   let regForm = document.querySelector('#signupForm');
   console.log(regForm);
   
@@ -61,13 +94,18 @@ regForm.addEventListener("submit", (e)=> {
          
           let upDiv = document.createElement("div");
           upDiv.className = "alert alert-danger";
-          let err_msg = "";
-          for (let error of data.errors) {
-            err_msg += `<br>${error}`;
-            upDiv.innerHTML = err_msg;
-            console.log(upDiv);
-            regForm.prepend(upDiv);
+          let joinedErrorData = data.errors.join('<br>');
+          let errMsg = "";
+          for(let error of joinedErrorData){
+            errMsg += error;
+            upDiv.innerHTML = errMsg;
+            
+            
+            
+
           }
+          regForm.prepend(upDiv);
+          
         }
       })
       .catch(error => {
@@ -92,7 +130,7 @@ const updateHeader = () => {
       .then(data => {
         console.log(data);
         let loginButton = document.querySelector('a[href="login.html"]');
-        loginButton.setAttribute("id", "username");
+       // loginButton.setAttribute("id", "username");
         loginButton.textContent = `Hi, ${data.firstname}`;
         let signButton = document.querySelector('a[href="register.html"]');
         signButton.setAttribute("id", "logout");
@@ -163,7 +201,7 @@ const LoginPostData = (e)=>{
     else if(data.status==="error"){
      let upDiv = document.createElement('div');
      upDiv.className = "alert alert-danger";
-     upDiv.textContent="Invalid email\//password";
+     upDiv.textContent="Invalid email\/password";
      loginForm.prepend(upDiv);
      
 
@@ -197,7 +235,7 @@ loginForm.addEventListener('submit', LoginPostData);
         tags
       }
       
-      let url ="http://localhost:4000/api/projects";
+      let url ="http://localhost:400/api/projects";
       fetch(url, {
         method:'POST',
         headers:{

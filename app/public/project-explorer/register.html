@@ -13,11 +13,11 @@
             <form class="form-inline" ><input type="text" placeholder="Search Projects"
                     name="search" class="mr-sm-2 form-control"><input type="hidden" name="type" value="Name"><button
                     type="submit" class="btn btn-outline-light">Search</button></form>
-            <div class="mr-auto navbar-nav"><a href="/projects" data-rb-event-key="/projects"
+            <div class="mr-auto navbar-nav"><a href="viewProject.html" data-rb-event-key="/projects"
                     class="nav-link">Projects</a><a href="createproject.html" data-rb-event-key="/projects/submit"
                     class="nav-link">Submit</a></div>
             <div class="navbar-nav"><a href="register.html" data-rb-event-key="/signup" class="nav-link">Sign up</a><a
-                    href="login.html" data-rb-event-key="/login" class="nav-link">Login</a></div>
+                    href="login.html" data-rb-event-key="/login" class="nav-link" id="username">Login</a></div>
         </nav>
 
 
@@ -41,40 +41,20 @@
                                     name="password" placeholder="Your Password" required="" class="form-control"></div>
                         </div>
                         <div class="form-row">
-                            <div class="form-group col-md-6"><label class="form-label">Program</label><select
+                            <div class="form-group col-md-6"><label class="form-label">Program</label>
+                                <select
                                     name="program" required="" class="form-control">
                                     <option value="">Choose...</option>
-                                    <option value="5f469f60c482f40030c5cbcc">Computer Technology</option>
-                                    <option value="5f469f60c482f40030c5cbcb">Computer Science</option>
-                                    <option value="5f469f60c482f40030c5cbcd">Computer Information Systems</option>
-                                    <option value="5f469f60c482f40030c5cbce">Software Engineering</option>
-                                </select></div>
+                                   
+                                </select>
+                            </div>
                             <div class="form-group col"><label class="form-label">Matriculation number</label><input
                                     type="text" name="matricNumber" placeholder="e.g. 16/2020" required=""
                                     class="form-control"></div>
                             <div class="form-group col"><label class="form-label">Graduation year</label><select
                                     name="graduationYear" required="" class="form-control">
                                     <option value="">Choose...</option>
-                                    <option value="2020">2020</option>
-                                    <option value="2019">2019</option>
-                                    <option value="2018">2018</option>
-                                    <option value="2017">2017</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2015">2015</option>
-                                    <option value="2014">2014</option>
-                                    <option value="2013">2013</option>
-                                    <option value="2012">2012</option>
-                                    <option value="2011">2011</option>
-                                    <option value="2010">2010</option>
-                                    <option value="2009">2009</option>
-                                    <option value="2008">2008</option>
-                                    <option value="2007">2007</option>
-                                    <option value="2006">2006</option>
-                                    <option value="2005">2005</option>
-                                    <option value="2004">2004</option>
-                                    <option value="2003">2003</option>
-                                    <option value="2002">2002</option>
-                                    <option value="2001">2001</option>
+                                    
                                 </select></div>
                         </div><button type="submit" class="btn btn-primary btn-1" id="btn-1">Sign Up</button>
                     </form>
