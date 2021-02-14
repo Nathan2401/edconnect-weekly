@@ -13,7 +13,7 @@ const signPostReq = () => {
   const getPrograms = ()=>{
     fetch('http://localhost:4000/api/programs').then(response=>response.json()).then(data=>{
       let selectProgCont =  document.getElementsByName('program')[0]
-      let gradItem = gradGet(data);
+      let progItem = progGet(data);
        selectProgCont.insertAdjacentHTML('beforeend',gradItem);
        console.log(selectProgCont);
        return selectProgCont;
@@ -36,7 +36,7 @@ const signPostReq = () => {
   getPrograms();
   getGrad();
   let regForm = document.querySelector('#signupForm');
-  console.log(regForm);
+  //console.log(regForm);
   
 regForm.addEventListener("submit", (e)=> {
     e.preventDefault();
@@ -78,19 +78,19 @@ regForm.addEventListener("submit", (e)=> {
     })
       .then(response => {
         return response.json();
-        console.log(response);
+        //console.log(response);
       })
 
       .then(data => {
         if (data.status==='ok') {
-          console.log("Success:", data);
+          //console.log("Success:", data);
           let value = data.data.id;
           //console.log(uid);
           document.cookie = `uid=${value}; path=/; max-age=${60*60*24*30};`;
-          console.log(data);
+          //console.log(data);
           window.location.href = "index.html";
         } else {
-          console.log(data.errors);
+         // console.log(data.errors);
          
           let upDiv = document.createElement("div");
           upDiv.className = "alert alert-danger";
@@ -109,7 +109,7 @@ regForm.addEventListener("submit", (e)=> {
         }
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
       });
   });
 }
@@ -117,18 +117,18 @@ regForm.addEventListener("submit", (e)=> {
 
 const updateHeader = () => {
   let cookie = document.cookie;
-  console.log(cookie);
+ // console.log(cookie);
   let cookieArr1 = cookie.split(";");
-  console.log(cookieArr1);
+  //console.log(cookieArr1);
   const cookieFind = cookieArr1.find(el => el.startsWith("uid"));
   if(cookieFind){
     cookieValue = cookieFind.split("=")[1];
-    console.log(cookieValue);
+    //console.log(cookieValue);
   if (cookieValue) {
     fetch(`http://localhost:4000/api/users/${cookieValue}`)
       .then(response => response.json())
       .then(data => {
-        console.log(data);
+        //console.log(data);
         let loginButton = document.querySelector('a[href="login.html"]');
        // loginButton.setAttribute("id", "username");
         loginButton.textContent = `Hi, ${data.firstname}`;
@@ -152,7 +152,7 @@ const updateHeader = () => {
         SignButtonCLicked();
       })
       .catch(error => {
-        console.log(error);
+        //console.log(error);
       });
   }
 
@@ -189,13 +189,13 @@ const LoginPostData = (e)=>{
         body: JSON.stringify(loginData)
   
   }).then((response)=>response.json()).then((data)=>{
-    console.log(data);
+    //console.log(data);
     if(data.status ==="ok"){
       
      let value = data.data.id;
-     console.log(value);
+     //console.log(value);
       document.cookie = `uid=${value}; path=/; max-age=${60*60*24*30};`;
-      console.log(document.cookie);
+      //console.log(document.cookie);
       window.location.href="index.html";
     }
     else if(data.status==="error"){
@@ -207,7 +207,7 @@ const LoginPostData = (e)=>{
 
     }
   }).catch((error)=>{
-    console.log(error);
+    //console.log(error);
     
   })
 }
@@ -245,7 +245,7 @@ loginForm.addEventListener('submit', LoginPostData);
 
       }).then((response)=>response.json()).then(data=>{
         if(data.status ==='ok'){
-          console.log(data);
+         // console.log(data);
           window.location.href="index.html";
         }
         else{
@@ -254,7 +254,7 @@ loginForm.addEventListener('submit', LoginPostData);
          let errData = data.errors.join('<br>');
          for(let err in errData){
            upDiv.innerHTML += err ;
-           console.log(upDiv);
+          // console.log(upDiv);
            createProj.append(upDiv);
            
 
@@ -263,7 +263,7 @@ loginForm.addEventListener('submit', LoginPostData);
 
         }
       }) .catch((error)=>{
-        console.log(error);
+       // console.log(error);
       })
    
     }
@@ -281,7 +281,7 @@ loginForm.addEventListener('submit', LoginPostData);
     let authorsList = authors.join(',');
     let tagsList = tags.map(e=>`#${e}`).join(' ').replace(',',"");
     const card = document.createElement('div'); 
-     card.className = "col-lg-3 mb-3"; card.innerHTML = ` <div class='min-text-line border border-muted rounded p-3 mb-3 hoverable h-100'> <h5 class='text-primary text-capitalize'>${name}</h5> <h6 class='text-secondary text-capitalize'>${authorsList}</h6> <p class='small'>${abstract}</p> <p class='small font-weight-bold text-primary'>${tagsList}</p> </div>`; card.addEventListener('click', () => { window.location.href = `${window.location.origin}/project-explorer/viewProject.html?id=${id}` }) 
+     card.className = "col-lg-3 mb-3"; card.innerHTML = ` <div class='min-text-line border border-muted rounded p-3 mb-3 hoverable h-100'> <h5 class='text-primary text-capitalize'>${name}</h5> <h6 class='text-secondary text-capitalize'>${authorsList}</h6> <p class='small'>${abstract}</p> <p class='small font-weight-bold text-primary'>${tagsList}</p> </div>`; card.addEventListener('click', () => { window.location.href = `${window.location.origin}/project-explorer/viewproject.html?id=${id}` }) 
     return card;}
 
     const projectCards = document.getElementById('projectCardContainer');
@@ -294,7 +294,9 @@ loginForm.addEventListener('submit', LoginPostData);
       })
       
       
-      }).catch(err=>console.log(err));
+      }).catch(err=>
+console.log(err)
+        )
   }
 
   /* end of Load Project section*/
@@ -310,7 +312,7 @@ loginForm.addEventListener('submit', LoginPostData);
     const linkToDom = (project) =>{
       const{createdBy,name, abstract, authors,tags} = project;
       //let authorsList = authors.join(',');
-      console.log(authors);
+      //console.log(authors);
     let tagsList = tags.map(e=>`#${e}`).join(' ').replace(',',"");
       let projName = document.getElementById('project_name');
       projName.textContent = name;
@@ -319,7 +321,7 @@ loginForm.addEventListener('submit', LoginPostData);
       let projAuthors = document.getElementById('project_authors');
       let projAuthorsChild = projAuthors.children[1];
      // console.log(projAuthorsChild);
-      console.log(projAuthorsChild.children);
+      //console.log(projAuthorsChild.children);
       for( let i=0;i<projAuthorsChild.children.length;i++){
       projAuthorsChild.children[i].children[0].textContent =authors[i];
        let projTags = document.getElementById('project_tags').children[0].children[0];
@@ -330,7 +332,7 @@ loginForm.addEventListener('submit', LoginPostData);
       const createBy=(creator)=>{
         const{firstname,lastname} = creator;
         let projAuthor = document.getElementById('project_author');
-        console.log(projAuthor);
+       // console.log(projAuthor);
         projAuthor.children[1].textContent = `${firstname} ${lastname}`;
 
       }
@@ -355,7 +357,7 @@ loginForm.addEventListener('submit', LoginPostData);
  const getViewProjData = () =>{
     let fetchUrl= `http://localhost:4000/api/projects/${id}`;
     fetch(fetchUrl).then(response=>response.json()).then(data=>{
-      console.log(data);
+      //console.log(data);
       linkToDom(data);
      // console.log(linkToDom(data));
     })
@@ -380,7 +382,7 @@ window.onload = () => {
   
   
   let path = window.location.href.toLowerCase();
-  console.log(path);
+ // console.log(path);
   if(path==="http://localhost:4000/project-explorer/register.html"){
     signPostReq();
     updateHeader();
@@ -397,9 +399,9 @@ else if(path.includes('createproject.html')){
 
   let cookieArr1 = document.cookie.split(';')
     let cookieFind = cookieArr1.find(el=>el.startsWith('uid'));
-    console.log(cookieFind);
+   // console.log(cookieFind);
     let cookieVal = cookieFind.split('=')[1];
-    console.log(cookieVal);
+    //console.log(cookieVal);
     if(cookieVal){
       updateHeader();
    CreateProject();
