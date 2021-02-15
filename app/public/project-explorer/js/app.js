@@ -14,7 +14,7 @@ const signPostReq = () => {
     fetch('http://localhost:4000/api/programs').then(response=>response.json()).then(data=>{
       let selectProgCont =  document.getElementsByName('program')[0]
       let progItem = progGet(data);
-       selectProgCont.insertAdjacentHTML('beforeend',gradItem);
+       selectProgCont.insertAdjacentHTML('beforeend',progItem);
        console.log(selectProgCont);
        return selectProgCont;
     
@@ -86,7 +86,7 @@ regForm.addEventListener("submit", (e)=> {
           //console.log("Success:", data);
           let value = data.data.id;
           //console.log(uid);
-          document.cookie = `uid=${value}; path=/; max-age=${60*60*24*30};`;
+          document.cookie = `uid=${value};path=/;max-age=${60*60*24*30};`;
           //console.log(data);
           window.location.href = "index.html";
         } else {
@@ -121,7 +121,7 @@ const updateHeader = () => {
   let cookieArr1 = cookie.split(";");
 
   const cookieFind = cookieArr1.find(el => el.trim().startsWith("uid"));
-  //console.log(cookieFind);
+  console.log(cookieFind);
   if(cookieFind){
     cookieValue = cookieFind.split("=")[1];
     //console.log(cookieValue);
