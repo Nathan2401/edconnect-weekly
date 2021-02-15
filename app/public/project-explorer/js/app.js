@@ -124,7 +124,7 @@ const updateHeader = () => {
   console.log(cookieFind);
   if(cookieFind){
     cookieValue = cookieFind.split("=")[1];
-    //console.log(cookieValue);
+    console.log(cookieValue);
   if (cookieValue) {
     fetch(`http://localhost:4000/api/users/${cookieValue}`)
       .then(response => response.json())
@@ -399,7 +399,7 @@ window.onload = () => {
 else if(path.includes('createproject.html')){
 
   let cookieArr1 = document.cookie.split(';')
-    let cookieFind = cookieArr1.find(el=>el.startsWith('uid'));
+    let cookieFind = cookieArr1.find(el=>el.trim().startsWith('uid'));
    // console.log(cookieFind);
     let cookieVal = cookieFind.split('=')[1];
     //console.log(cookieVal);
