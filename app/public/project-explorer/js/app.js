@@ -119,8 +119,9 @@ const updateHeader = () => {
   let cookie = document.cookie;
  // console.log(cookie);
   let cookieArr1 = cookie.split(";");
-  //console.log(cookieArr1);
-  const cookieFind = cookieArr1.find(el => el.startsWith("uid").trim());
+
+  const cookieFind = cookieArr1.find(el => el.trim().startsWith("uid"));
+  //console.log(cookieFind);
   if(cookieFind){
     cookieValue = cookieFind.split("=")[1];
     //console.log(cookieValue);
