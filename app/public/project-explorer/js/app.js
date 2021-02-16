@@ -400,13 +400,14 @@ else if(path.includes('createproject.html')){
 
   let cookieArr1 = document.cookie.split(';')
     let cookieFind = cookieArr1.find(el=>el.trim().startsWith('uid'));
-   // console.log(cookieFind);
+    if(cookieFind){
+    console.log(cookieFind);
     let cookieVal = cookieFind.split('=')[1];
-    //console.log(cookieVal);
-    if(cookieVal){
+    console.log(cookieVal);
+    
       updateHeader();
    CreateProject();
-  }
+    }
   else{
     window.location.href ="login.html" ;
   }
