@@ -215,7 +215,7 @@ const LoginPostData = (e)=>{
     else if(data.status==="error"){
      let upDiv = document.createElement('div');
      upDiv.className = "alert alert-danger";
-     upDiv.textContent="Invalid email\\password";
+     upDiv.textContent="Invalid email/password";
      loginForm.prepend(upDiv);
      
 
