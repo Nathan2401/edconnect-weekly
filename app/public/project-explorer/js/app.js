@@ -1,6 +1,7 @@
 
 
 /*SignUP Part*/
+/*signup function*/
 const signPostReq = () => {
   const progGet = (programs) =>{
     return programs.map(prog=>"<option value='"+prog+"'>"+prog+"<option>").join('');
@@ -10,8 +11,9 @@ const signPostReq = () => {
     return grad.map(gra=>"<option value ='"+gra+"'>"+gra+"</option>").join('');
 
   }
+  
   const getPrograms = ()=>{
-    fetch('http://localhost:4000/api/programs').then(response=>response.json()).then(data=>{
+    fetch('/api/programs').then(response=>response.json()).then(data=>{
       let selectProgCont =  document.getElementsByName('program')[0]
       let progItem = progGet(data);
        selectProgCont.insertAdjacentHTML('beforeend',progItem);
@@ -21,9 +23,10 @@ const signPostReq = () => {
     
     })
   }
+  //API GET Request for Programs
 
   const getGrad = ()=>{
-    fetch('http://localhost:4000/api/graduationYears').then(response=>response.json()).then(data=>{
+    fetch('/api/graduationYears').then(response=>response.json()).then(data=>{
 
     let selectGradCont =  document.getElementsByName('graduationYear')[0]
    let gradItem = gradGet(data);
@@ -33,8 +36,10 @@ const signPostReq = () => {
     
     })
   }
+  //API GET request for Graduation Years
   getPrograms();
   getGrad();
+  //invoking the functions for the graduation year and the programs
   let regForm = document.querySelector('#signupForm');
   //console.log(regForm);
   
@@ -68,7 +73,7 @@ regForm.addEventListener("submit", (e)=> {
         graduationYear
       }
 
-    fetch("http://localhost:4000/api/register", {
+    fetch("/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -114,9 +119,11 @@ regForm.addEventListener("submit", (e)=> {
   });
 }
 
+//Api post request for register.html
 
 const updateHeader = () => {
   let cookie = document.cookie;
+  
  // console.log(cookie);
   let cookieArr1 = cookie.split(";");
 
@@ -125,8 +132,10 @@ const updateHeader = () => {
   if(cookieFind){
     cookieValue = cookieFind.split("=")[1];
     console.log(cookieValue);
+
+    //Fetching Cookie
   if (cookieValue) {
-    fetch(`http://localhost:4000/api/users/${cookieValue}`)
+    fetch(`/api/users/${cookieValue}`)
       .then(response => response.json())
       .then(data => {
         //console.log(data);
@@ -162,7 +171,7 @@ const updateHeader = () => {
   
 };
 
-
+//Api GET request to update Navbar.
 
 /*Login Part*/
 
@@ -181,7 +190,7 @@ const LoginPostData = (e)=>{
     }
     //console.log(loginData);
     
-  let url = "http://localhost:4000/api/login";
+  let url = "/api/login";
   fetch(url, {
     method: "POST",
     headers: {
@@ -211,6 +220,7 @@ const LoginPostData = (e)=>{
     //console.log(error);
     
   })
+  //Api POST request of login page.
 }
 loginForm.addEventListener('submit', LoginPostData);
 
@@ -236,7 +246,7 @@ loginForm.addEventListener('submit', LoginPostData);
         tags
       }
       
-      let url ="http://localhost:400/api/projects";
+      let url ="/api/projects";
       fetch(url, {
         method:'POST',
         headers:{
@@ -266,6 +276,8 @@ loginForm.addEventListener('submit', LoginPostData);
       }) .catch((error)=>{
        // console.log(error);
       })
+
+      //Api POST request for the createProject page
    
     }
 
@@ -287,7 +299,7 @@ loginForm.addEventListener('submit', LoginPostData);
 
     const projectCards = document.getElementById('projectCardContainer');
     
-    let url = `http://localhost:4000/api/projects/`;
+    let url = `/api/projects/`;
     fetch(url).then(response =>response.json()).then(data =>
       {data.slice(0,4).map(dat=>{
         let item = createProjectCard(dat); 
@@ -298,6 +310,7 @@ loginForm.addEventListener('submit', LoginPostData);
       }).catch(err=>
 console.log(err)
         )
+  //Api GET request to load project into index page.
   }
 
   /* end of Load Project section*/
@@ -309,7 +322,7 @@ console.log(err)
     let url = new URL(window.location.href);
     let params =new URLSearchParams(url.search);
     let id = params.get('id');
-
+//getting id params from the url
     const linkToDom = (project) =>{
       const{createdBy,name, abstract, authors,tags} = project;
       //let authorsList = authors.join(',');
@@ -338,7 +351,7 @@ console.log(err)
 
       }
      const getCreateByDat = ()=> {
-        let fetchCreateUrl =`http://localhost:4000/api/users/${createdBy}`
+        let fetchCreateUrl =`/api/users/${createdBy}`
         fetch(fetchCreateUrl).then(response=>response.json()).then(data=>{
          // console.log(id);
           createBy(data);
@@ -356,7 +369,7 @@ console.log(err)
    
 
  const getViewProjData = () =>{
-    let fetchUrl= `http://localhost:4000/api/projects/${id}`;
+    let fetchUrl= `/api/projects/${id}`;
     fetch(fetchUrl).then(response=>response.json()).then(data=>{
       //console.log(data);
       linkToDom(data);
@@ -384,14 +397,14 @@ window.onload = () => {
   
   let path = window.location.href.toLowerCase();
  // console.log(path);
-  if(path==="http://localhost:4000/project-explorer/register.html"){
+  if(path.includes("register.html")){
     signPostReq();
     updateHeader();
     
   
     
-}else if (path==="http://localhost:4000/project-explorer/login.html"){
-  //updateHeader();
+}else if (path.includes("login.html")){
+  updateHeader();
   LoginAction();
  
 
